@@ -65,6 +65,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "app.middleware.MediaFileMiddleware",  # Добавляем middleware для обслуживания медиа-файлов
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -226,8 +227,18 @@ LOGGING = {
     "loggers": {
         "": {  # Корневой логгер для всего проекта
             "handlers": ["console", "file"],
-            "level": "INFO",
+            "level": "DEBUG",  # Изменено с INFO на DEBUG
             "propagate": True,
+        },
+        "django.request": {  # Логгер для запросов Django - для отслеживания ошибок 500
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "app.middleware": {  # Логгер для нашего middleware
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
         },
         "orders": {  # Логгер для приложения orders
             "handlers": ["console", "file"],

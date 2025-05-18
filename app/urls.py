@@ -29,8 +29,9 @@ urlpatterns = [
     path("403/", TemplateView.as_view(template_name="403.html"), name="page_403"),
 ]
 
-# Добавляем обработку медиа-файлов
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Добавляем обработку медиа-файлов только в режиме разработки
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Добавляем обработку статических файлов
 urlpatterns += staticfiles_urlpatterns()
