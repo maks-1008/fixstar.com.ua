@@ -1,0 +1,254 @@
+{% load static %}
+{% load carts_tags %}
+
+<!-- Основное содержимое корзины - используется во всех видах корзины -->
+<!-- Параметры:
+     show_buttons - показывать ли кнопки оформления заказа (по умолчанию: True)
+     compact - компактное отображение (по умолчанию: False)
+-->
+
+<!-- Таблица товаров -->
+<div class="table-responsive" style="max-width: 100%; overflow-x: auto;">
+    <table class="product-table table table-striped table-hover mb-3" style="width: 100%;">
+        <thead class="table-light">
+            <tr>
+                <th style="width: 8%;"></th>
+                <th style="width: 30%;">АРТИКУЛ, НАЗВА ТОВАРУ</th>
+                <th style="width: 15%;">КІЛЬКІСТЬ</th>
+                <th style="width: 15%;">ЦІНА</th>
+                <th style="width: 15%;">СУМА</th>
+                <th style="width: 5%;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if request.user.is_authenticated %}
+                {% user_carts request as carts %}
+                {% for cart in carts %}
+                    <tr>
+                        <td>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal{{ cart.product.id }}">
+                                {% if cart.product.image %}
+                                <img src="{{ cart.product.image.url }}" class="img-thumbnail" alt="{{ cart.product.name }}" style="width: 60px; height: 60px; object-fit: contain;">
+                                {% else %}
+                                <img src="{% static 'deps/images/Not found image.png' %}" class="img-thumbnail" alt="Нет изображения" style="width: 60px; height: 60px; object-fit: contain;">
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td>
+                            <div class="product-info">
+                                <span style="font-weight: 500;">{{ cart.product.code }}</span><br>
+                                <span style="color: #555;">{{ cart.product.name }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <form action="{% url 'carts:cart_change' cart.product.id %}" method="post" class="quantity-form">
+                                {% csrf_token %}
+                                <input type="hidden" name="cart_id" value="{{ cart.id }}">
+                                <div class="d-flex justify-content-center">
+                                    <input type="number" 
+                                           name="quantity"
+                                           class="form-control number cart-quantity-input" 
+                                           value="{{ cart.quantity }}"
+                                           min="1"
+                                           onchange="this.form.submit()"
+                                           style="max-width: 70px; text-align: center;">
+                                </div>
+                            </form>
+                        </td>
+                        <td style="font-weight: 500;">{{ cart.product.price|floatformat:2 }} грн</td>
+                        <td style="font-weight: 500;" class="item-total-price">{{ cart.products_price|floatformat:2 }} грн</td>
+                        <td>
+                            <a href="{% url 'carts:cart_remove' cart.product.id %}" class="btn btn-outline-danger btn-sm remove-from-cart">
+                                <img class="mx-1" src="{% static 'deps/icons/trash3-fill.svg' %}"
+                                    alt="Видалити" width="16" height="16">
+                            </a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">Кошик порожній</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% with session_cart=request.session.cart %}
+                    {% if session_cart %}
+                        {% for product_id, quantity in session_cart.items %}
+                            {% with product=product_id|get_product %}
+                                {% if product %}
+                                    <tr>
+                                        <td>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal{{ product.id }}">
+                                                {% if product.image %}
+                                                <img src="{{ product.image.url }}" class="img-thumbnail" alt="{{ product.name }}" style="width: 60px; height: 60px; object-fit: contain;">
+                                                {% else %}
+                                                <img src="{% static 'deps/images/Not found image.png' %}" class="img-thumbnail" alt="Нет изображения" style="width: 60px; height: 60px; object-fit: contain;">
+                                                {% endif %}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="product-info">
+                                                <span style="font-weight: 500;">{{ product.code }}</span><br>
+                                                <span style="color: #555;">{{ product.name }}</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <form action="{% url 'carts:session_change' %}" method="post" class="quantity-form">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                                <div class="d-flex justify-content-center">
+                                                    <input type="number" 
+                                                           name="quantity"
+                                                           class="form-control number cart-quantity-input" 
+                                                           value="{{ quantity }}"
+                                                           min="1"
+                                                           onchange="this.form.submit()"
+                                                           style="max-width: 70px; text-align: center;">
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <td style="font-weight: 500;">{{ product.price|floatformat:2 }} грн</td>
+                                        <td style="font-weight: 500;" class="item-total-price">{{ product.price|multiply:quantity|floatformat:2 }} грн</td>
+                                        <td>
+                                            <form action="{% url 'carts:session_remove' %}" method="post" class="remove-form">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                    <img class="mx-1" src="{% static 'deps/icons/trash3-fill.svg' %}"
+                                                        alt="Видалити" width="16" height="16">
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center">Кошик порожній</td>
+                        </tr>
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Итоговая информация о корзине -->
+<div class="card mb-3 shadow-lg">
+    <div class="card-footer">
+        <p class="float-left">Всього позиції товарів<strong> 
+            {% if request.user.is_authenticated %}
+                <span id="cart-items-count">{{ carts.count }}</span>
+            {% else %}
+                <span id="cart-items-count">{{ request.session.cart|cart_quantity|default:0 }}</span>
+            {% endif %}
+        </strong> на суму</p>
+        <h4 class="float-left"><strong>
+            {% if request.user.is_authenticated %}
+                <span id="cart-total-price">{{ carts.total_price|floatformat:2 }}</span>
+            {% else %}
+                <span id="cart-total-price">{% calculate_session_cart_total request.session.cart|default:0 %}</span>
+            {% endif %}
+        грн</strong></h4>
+    </div>
+</div>
+
+<!-- Кнопка оформления заказа (опционально) -->
+{% if show_buttons|default:True and current_page != 'create_order' %}
+<div class="text-center mb-3">
+    <a class="btn" href="{% url 'orders:create_order' %}" style="background-color: #ffa023; color: white;">
+        Оформити замовлення
+    </a>
+</div>
+{% endif %}
+
+<!-- Модальные окна для изображений товаров -->
+{% if request.user.is_authenticated %}
+    {% for cart in carts %}
+    <div class="modal fade" id="imageModal{{ cart.product.id }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ cart.product.name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    {% if cart.product.image %}
+                    <img src="{{ cart.product.image.url }}" class="img-fluid" alt="{{ cart.product.name }}" style="max-height: 70vh;">
+                    {% else %}
+                    <img src="{% static 'deps/images/Not found image.png' %}" class="img-fluid" alt="Нет изображения" style="max-height: 70vh;">
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    {% with session_cart=request.session.cart %}
+        {% for product_id, quantity in session_cart.items %}
+            {% with product=product_id|get_product %}
+                {% if product %}
+                <div class="modal fade" id="imageModal{{ product.id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{ product.name }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}" style="max-height: 70vh;">
+                                {% else %}
+                                <img src="{% static 'deps/images/Not found image.png' %}" class="img-fluid" alt="Нет изображения" style="max-height: 70vh;">
+                                {% endif %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+    {% endwith %}
+{% endif %}
+
+<!-- Скрипты для корзины -->
+<script>
+    // Добавляем обработчик события для взаимодействия с корзиной
+    document.addEventListener('DOMContentLoaded', function() {
+        // Обрабатываем нажатие Enter в полях ввода количества
+        const quantityInputs = document.querySelectorAll('.cart-quantity-input');
+        quantityInputs.forEach(function(input) {
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.form.submit();
+                }
+            });
+        });
+        
+        // Подтверждение удаления товара
+        const removeForms = document.querySelectorAll('.remove-form');
+        removeForms.forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                if (!confirm('Ви дійсно хочете видалити цей товар з кошика?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+        
+        const removeLinks = document.querySelectorAll('.remove-from-cart');
+        removeLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                if (!confirm('Ви дійсно хочете видалити цей товар з кошика?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    });
+</script>

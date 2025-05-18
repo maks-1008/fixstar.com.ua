@@ -1,0 +1,47 @@
+#python stuff
+venv/
+.pylintrc
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+#ide stuff
+.vscode
+.idea
+
+#django stuff
+db.sqlite3
+media/
+staticfiles/
+*.log
+local_settings.py
+
+# Environments
+.env
+.venv
+ENV/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# Database backups
+*.dump
+*.bak

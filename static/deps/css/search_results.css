@@ -1,0 +1,144 @@
+/* Основные стили для страницы поиска */
+.search-header {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 20rem;
+    border: 1px solid #e9ecef;
+}
+
+.search-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Стили для карточек товаров */
+.product-card {
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.product-image-container {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    padding: 1rem;
+}
+
+.product-image {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* Стили для подсветки результатов */
+.highlight {
+    background-color: #fff3cd;
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+}
+
+/* Стили для мета-информации */
+.search-meta {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+/* Стили для бейджей доступности */
+.badge-availability {
+    font-size: 0.85rem;
+    padding: 0.35em 0.65em;
+}
+
+.badge-in-stock {
+    background-color: #198754;
+}
+
+.badge-out-of-stock {
+    background-color: #dc3545;
+}
+
+/* Стили для цены */
+.price-tag {
+    font-weight: 600;
+    color: #0d6efd;
+    font-size: 1.1rem;
+}
+
+/* Стили для табличного представления */
+.product-table {
+    font-size: 0.95rem;
+    margin-bottom: 0 !important;
+}
+
+.product-table th {
+    font-weight: 600;
+    background-color: #f8f9fa !important;
+}
+
+.quantity-input {
+    width: 70px !important;
+    text-align: center;
+}
+
+.search-highlight {
+    background-color: yellow;
+    font-weight: bold;
+    padding: 0 2px;
+    border-radius: 3px;
+}
+.search-highlight {
+    background-color: #FFEB3B !important;
+    padding: 0 2px !important;
+    border-radius: 3px !important;
+    font-weight: bold !important;
+    color: #000 !important;
+}
+
+.product-table img.img-thumbnail {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 3px;
+    transition: transform 0.2s ease;
+}
+
+.product-table img.img-thumbnail:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.product-table td a {
+    display: block;
+    transition: transform 0.2s ease;
+}
+.product-table td a:hover {
+    transform: scale(1.05);
+}
+/* Стили для модального окна с изображением */
+.modal-body img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.modal-title {
+    font-weight: 500;
+    color: #333;
+}

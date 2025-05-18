@@ -1,0 +1,29 @@
+/* Основные стили для правильного расположения футера */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    padding-bottom: 0px; /* Высота футера + отступ */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding-bottom: 40px; /* Отступ от футера */
+}
+
+.footer-custom {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: auto;  /* Изменено с фиксированной высоты на auto */
+    background-color: #343a40;
+    margin-top: auto; /* Прижимаем футер вниз */
+    z-index: 400;
+    padding: 10px 0; /* Добавлено: 20px сверху и снизу */
+}

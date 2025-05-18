@@ -1,0 +1,1 @@
+[{"model": "goods.subcategory", "pk": 1, "fields": {"name": "DIN 933", "category": 2, "slug": "din-933", "image": "subcategory_images/DIN933_8PaBnNu.webp", "description_image": "description_images/bolt_description_DIN933_emFebRJ.png"}}]

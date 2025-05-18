@@ -1,0 +1,419 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "deps/css/bootstrap/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "deps/css/my_css.css" %}"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Стиль footer-a для главной страницы -->
+    {% block css %}
+    {% endblock %}
+    <!-- Favicons for different platforms -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static "deps/favicon/apple-touch-icon.png" %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static "deps/favicon/favicon-32x32.png" %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "deps/favicon/favicon-16x16.png" %}">
+    <link rel="manifest" href="{% static "deps/favicon/site.webmanifest" %}">
+    <title>{{ title }}</title>
+    {% csrf_token %}
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url "main:index" %}">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Інформация
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item  text-white" href="{% url "main:deliverypayment" %}">Доставка і оплата</a></li>
+                                <li><a class="dropdown-item  text-white" href="{% url "main:contacts" %}">Контактна інформація</a></li>
+                                <li><a class="dropdown-item  text-white" href="{% url "main:about" %}">Про нас</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  text-white" href="{% url "user:users_cart" %}">Кошик</a>
+                        </li>
+                        {% if not user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link  text-white" href="{% url "user:login_signup" %}">Вхід</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item dropdown ">
+                                <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Мій профіль
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item  text-white" href="{% url "user:users_cart" %}">Кошик</a></li>
+                                    <li><a class="dropdown-item  text-white" href="{% url "user:profile" %}">Особистий кабінет</a></li>
+                                    {% if user.is_admin or user.is_staff %}
+                                        <li><a class="dropdown-item  text-white" href="{% url "admin:index" %}">Адмін панель</a></li>
+                                    {% endif %}
+                                    <li> <hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item  text-white" href="{% url "user:logout" %}">Вийти</a></li>
+                                </ul>
+                            </li>
+                        {% endif %} 
+                    </ul>
+                    <form class="d-flex" action="{% url 'goods:search' %}" method="get">
+                        <input class="form-control me-2" type="search" name="q" placeholder="Поиск товаров..." aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Пошук</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="main-content">
+        
+        <div id="page-wrapper">
+            <section>
+                <div class="container">
+                    <!-- Каталог и корзина с фиксированным расположением на странице -->
+                        <div class="fixed-container">
+                            <div class="row mt-1 position-fixed z-3">
+                                <!-- Каталог -->
+                                <div class="dropdown mb-4">                                 
+                                    <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        Кріплення
+                                        <img class="mx-1" src="{% static 'deps/icons/grid-fill.svg' %}" alt="Catalog Icon" width="16" height="16">
+                                    </button>    
+                                    <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Анкери</button>
+                                            <ul class="dropdown-menu bg-dark">   
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'anker-molly' %}">Анкер MOLLY</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'anker-bierbah' %}">Анкер BIERBAH</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'anker-etkd' %}">Анкер ETKD</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'anker-redibolt' %}">Анкер REDIBOLT</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'anker-tfc' %}">Анкер TFC</a></li>  
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'anker-tgs' %}">Анкер TGS</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gvint-turbo' %}">Гвинт TURBO</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'dyubel-eto' %}">Дюбель ETO</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'himichni-ankeri-ta-aksesuari' %}">Хімічні анкери та аксесуари</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'anker-ethd' %}">Анкер ETHD</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'anker-dvorozpirnij-slr' %}">Анкер дворозпірний SLR</a></li>
+                                            </ul>                                  
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Болти</button>
+                                            <ul class="dropdown-menu bg-dark">   
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'bolti-z-shestigrannoyu-golovkoyu' %}">Болти з шестигранною головкою</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'bolti-z-kvadratnim-pidgolovkom' %}">Болти з квадратним підголовком</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'bolti-z-kilcem' %}">Болти з кільцем</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'bolti-spec' %}">Болти спец</a></li> 
+                                            </ul>                                  
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Гайки</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gajki-shestigranni' %}">Гайки шестигранні</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gajki-krugli' %}">Гайки круглі</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gajki-samostoporni' %}">Гайки самостопорні</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gajki-rim-gajka' %}">Рим-гайка</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gajka-z-flancem' %}">Гайка з фланцем</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gajka-koronchata' %}">Гайка корончата</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gajka-kovpachkova' %}">Гайка ковпачкова</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gajka-baranceva' %}">Гайка баранцева</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gajka-spec' %}">Гайка спец</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Гвинти</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gvinti-z-napivkrugloyu-golovkoyu' %}">Гвинти з напівкруглою головкою</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gvinti-z-potajnoyu-golovkoyu' %}">Гвинти з потайною головкою</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gvinti-z-cilindrichnoyu-golovkoyu' %}">Гвинти з циліндричною головкою</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gvinti-ustanovochni' %}">Гвинти установочні</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gvint-barancevij' %}">Гвинт баранцевий</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gvint-z-kilcem' %}">Гвинт з кільцем</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Дюбелі</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'dyubeli-dlya-lgk' %}">Дюбелі для ЛГК</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'dyubeli-ramni' %}">Дюбелі рамні</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'dyubeli-universalni' %}">Дюбелі універсальні</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'dyubel-shvidkij-montazh' %}">Дюбель швидкий монтаж</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'termodyubel' %}">Термодюбель</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'dyubeli-dlya-gazobetona' %}">Дюбелі для газобетона</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Заклепки</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gajki-klepalni' %}">Гайки клепальні</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'zaklepki' %}">Заклепки</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'zaklepki-gost' %}">Заклепки ГОСТ</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Самонарізи</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'samoriz-metall-pressshajba' %}">Саморіз  металл прессшайба</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'samoriz-vikonnij' %}">Саморіз віконний</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'samoriz-dlya-sendvich-panelej' %}">Саморіз для сендвіч панелей</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'samoriz-krovlya-ral' %}">Саморіз кровля RAL</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'samoriz-po-metalu-gostrij' %}">Саморіз по металу гострий</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'samoriz-po-metalu-z-burom' %}">Саморіз по металу з буром</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'samorizi-krovlya-cb' %}">Саморізи кровля ЦБ</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Шайби</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shajbi-standartni' %}">Шайби стандартні</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shajbi-stoporni-dlya-rizbovih-zyednan' %}">Шайби стопорні для різьбових з'єднань</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Шплінти</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shplint-din-94' %}">Шплінт DIN 94</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shplint-z-kilcem' %}">Шплінт з кільцем</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shplint-pruzh' %}">Шплінт пруж</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Штифти</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shtift-pruzh' %}">Штифт пруж</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Шурупи</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shurup-gips-der' %}">Шуруп Гіпс дер</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shurup-gips-metal' %}">Шуруп Гіпс метал</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shurup-universalnij-potaj' %}">Шуруп універсальний потай</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shurup-kryuk' %}">Шуруп-крюк</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shurup-universalnij-pkr' %}">Шуруп універсальний пкр</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gvint-dlya-dereva-din571' %}">Гвинт для дерева DIN571</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gvintshurup-kombinovanij' %}">Гвинт/шуруп комбінований</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'shurupi-konstrukcijni' %}">Шурупи конструкційні</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Стрижні</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'gajki-klepalni' %}">Гайки клепальні</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'zaklepki' %}">Заклепки</a></li>
+                                                <li><a class="dropdown-item text-white" href="{% url 'goods:category' 'zaklepki-gost' %}">Заклепки ГОСТ</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                    <div class="dropdown mb-4">
+                                        
+                                        <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Фарби
+                                            <img class="mx-1" src="{% static 'deps/icons/grid-fill.svg' %}" alt="Catalog Icon" width="16" height="16">
+                                        </button>
+                                        
+                                        <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                                            <li class="dropdown-submenu">
+                                                <button class="dropdown-item text-white" type="button">1</button>
+                                                <ul class="dropdown-menu bg-dark">
+                                                    {% comment %} <li><a class="dropdown-item text-white" href="{% url 'goods:cat1' %}">1</a></li>
+                                                    <li><a class="dropdown-item text-white" href="{% url 'goods:cat1' %}">2</a></li>
+                                                    <li><a class="dropdown-item text-white" href="{% url 'goods:cat1' %}">3</a></li> {% endcomment %}
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <button class="dropdown-item text-white" type="button">2</button>
+                                                <ul class="dropdown-menu bg-dark">
+                                                    {% comment %} <li><a class="dropdown-item text-white" href="{% url 'goods:cat1' %}">1</a></li>
+                                                    <li><a class="dropdown-item text-white" href="{% url 'goods:cat1' %}">2</a></li>
+                                                    <li><a class="dropdown-item text-white" href="{% url 'goods:cat1' %}">3</a></li> {% endcomment %}
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <button class="dropdown-item text-white" type="button">3</button>
+                                                <ul class="dropdown-menu bg-dark">
+                                                    {% comment %} <li><a class="dropdown-item text-white" href="{% url 'goods:cat1' %}">1</a></li>
+                                                    <li><a class="dropdown-item text-white" href="{% url 'goods:cat1' %}">2</a></li>
+                                                    <li><a class="dropdown-item text-white" href="{% url 'goods:cat1' %}">3</a></li> {% endcomment %}
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="dropdown mb-4">
+                                            
+                                        <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Інструмент
+                                            <img class="mx-1" src="{% static 'deps/icons/grid-fill.svg' %}" alt="Catalog Icon" width="16" height="16">
+                                        </button>
+                                        
+                                        <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                                            {% comment %} <li><a class="dropdown-item text-white" href="cat1:cat1">----------</a></li>
+                                            <li><a class="dropdown-item text-white" href="cat1:cat1">----------</a></li>
+                                            <li><a class="dropdown-item text-white" href="cat1:cat1">----------</a></li>
+                                            <li><a class="dropdown-item text-white" href="cat1:cat1">----------</a></li>
+                                            <li><a class="dropdown-item text-white" href="cat1:cat1">----------</a></li>
+                                            <li><a class="dropdown-item text-white" href="cat1:cat1">----------</a></li>
+                                            <li><a class="dropdown-item text-white" href="cat1:cat1">----------</a></li> {% endcomment %}
+                                        </ul>
+                                            
+                                    </div>
+                                <!-- Разметка модального окна корзины -->
+                                    <div class="dropdown mb-4">
+                                        {% include "includes/cart_button.html" %}
+                                    </div> 
+                                <!-- Закончилась разметка коталога -->   
+                            </div>
+                        </div>        
+                    <!-- Закончилась разметка модального окна -->
+                </div>
+                <!-- Контент -->
+                <div class="container">
+                    <div class="row mt-1">
+                        <div class="col-lg-2">
+                            <!-- Пустой блок на Ваше усмотрение -->
+                        </div>
+                        <div class="col-lg-10">
+                            <!-- Контент на странице -->
+                            {% include 'includes/notifications.html' %} 
+                            <!-- Toast уведомления -->
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>  
+
+    {% block footer %}
+    <footer class="footer-custom bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">&copy; FixStar 2024 Всі права захищені</p>
+        </div>
+    </footer>
+    {% endblock %}
+
+    <script src="{% static "deps/js/jquery/jquery-3.7.0.min.js" %}"></script>
+    <script src="{% static "deps/js/jquery-events.js" %}"></script>
+    <script src="{% static "deps/js/jquery-ajax.js" %}"></script>
+    <script src="{% static "deps/js/bootstrap/bootstrap.bundle.min.js" %}"></script>
+    
+    <!-- Добавляем скрипт для AJAX обработки корзины -->
+    <script src="{% static "deps/js/modal_cart.js" %}"></script>
+    <script src="{% static 'deps/js/subcategory_detail.js' %}"></script>
+    <script src="{% static 'deps/js/cart_debug.js' %}"></script>
+    <script src="{% static 'deps/js/cart_fix.js' %}"></script>
+    
+    <!-- Скрипт для отладки и синхронизации корзины -->
+    <script>
+        console.log('Base template script loaded');
+        
+        // Проверяем, загружены ли необходимые скрипты
+        $(document).ready(function() {
+            console.log('Document ready in base template');
+            console.log('jQuery version:', $.fn.jquery);
+            console.log('refreshCartModal exists:', typeof window.refreshCartModal === 'function');
+            console.log('initCartHandlers exists:', typeof window.initCartHandlers === 'function');
+            
+            // Если функция refreshCartModal не определена, создаем ее
+            if (typeof window.refreshCartModal !== 'function') {
+                console.warn('refreshCartModal not found, creating placeholder');
+                window.refreshCartModal = function() {
+                    console.log('Placeholder refreshCartModal called, reloading page');
+                    location.reload();
+                };
+            }
+            
+            // Добавляем обработчик для событий корзины
+            $(document).on('cartUpdated', function(e, data) {
+                console.log('cartUpdated event captured in base template', data);
+            });
+            
+            // Загружаем текущее состояние корзины при загрузке страницы
+            setTimeout(function() {
+                if (typeof window.refreshCartModal === 'function') {
+                    console.log('Updating cart on page load');
+                    
+                    // Обновляем счетчик корзины без обновления модального окна
+                    $.ajax({
+                        url: '/cart/modal-content/',
+                        type: 'GET',
+                        dataType: 'html',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        success: function(response) {
+                            try {
+                                const tempDiv = document.createElement('div');
+                                tempDiv.innerHTML = response;
+                                const cartCount = $(tempDiv).find('#cart-items-count').text();
+                                if (cartCount && cartCount.trim()) {
+                                    $('#goods-in-cart-count').text(cartCount);
+                                    console.log('Updated cart count from base template:', cartCount);
+                                }
+                            } catch (e) {
+                                console.error('Error updating cart count:', e);
+                            }
+                        }
+                    });
+                }
+            }, 1000);
+            
+            // Функция для глобальной отладки состояния корзины
+            window.debugCart = function() {
+                console.log('-------------- CART DEBUG INFO --------------');
+                console.log('Modal visible:', $('#exampleModal').hasClass('show'));
+                console.log('Cart count element exists:', $('#goods-in-cart-count').length > 0);
+                console.log('Current cart count:', $('#goods-in-cart-count').text());
+                
+                // Запрашиваем актуальное состояние корзины с сервера
+                $.ajax({
+                    url: '/cart/modal-content/',
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(response) {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = response;
+                        console.log('Server cart count:', $(tempDiv).find('#cart-items-count').text());
+                        console.log('Server response length:', response.length);
+                    }
+                });
+                
+                if (typeof window.refreshCartModal === 'function') {
+                    console.log('refreshCartModal is defined');
+                    window.refreshCartModal();
+                } else {
+                    console.warn('refreshCartModal is NOT defined');
+                }
+                
+                if (typeof window.initCartHandlers === 'function') {
+                    console.log('initCartHandlers is defined');
+                } else {
+                    console.warn('initCartHandlers is NOT defined');
+                }
+                
+                console.log('-------------------------------------------');
+            };
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+  <!-- Подключение кастомных стилей -->
+  <link rel="stylesheet" href="{% static 'deps/css/my_footer_css.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <!-- Контейнер для номеров телефонов с выравниванием по правому краю -->
+    <div class="d-flex justify-content-end">
+      <div>
+        <!-- Номера телефонов с иконками операторов -->
+        <p class="phone-number">
+            <img src="{% static 'deps/images/Lifecell.png' %}" alt="Lifecell" class="operator-icon">
+            <a href="tel:{{ content }}">{{ content }}</a>
+        </p>
+        <p class="phone-number">
+            <img src="{% static 'deps/images/Vodafone.png' %}" alt="Vodafone" class="operator-icon">
+            <a href="tel:{{ additional_phone }}">{{ additional_phone }}</a>
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  <footer class="footer-custom bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">&copy; FixStar 2024 Всі права захищені</p>
+    </div>
+  </footer>
+{% endblock %}
+ 

@@ -1,0 +1,89 @@
+{% if form.non_field_errors %}
+<div class="container mt-4">
+    <div class="alert alert-danger alert-dismissible fade show custom-shadow" role="alert">
+        {% for error in form.non_field_errors %}
+            {{ error }}
+        {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+{% endif %}
+
+<!-- Скрываем стандартные Django сообщения, но добавляем скрипт для их отображения через JS -->
+{% if messages %}
+    <div id="django-messages" style="display: none;">
+        {% for message in messages %}
+            <div data-message="{{ message }}" data-tags="{{ message.tags }}"></div>
+        {% endfor %}
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Функция для показа уведомлений
+            function showNotification(message, isSuccess) {
+                // Создаем элемент уведомления
+                const notification = document.createElement('div');
+                notification.className = 'cart-notification ' + (isSuccess ? 'success' : 'error');
+                notification.textContent = message;
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.right = '20px';
+                notification.style.padding = '10px 20px';
+                notification.style.backgroundColor = isSuccess ? '#28a745' : '#dc3545';
+                notification.style.color = 'white';
+                notification.style.borderRadius = '4px';
+                notification.style.zIndex = '9999';
+                notification.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                
+                // Добавляем уведомление в DOM
+                document.body.appendChild(notification);
+                
+                // Удаляем уведомление через 3 секунды
+                setTimeout(function() {
+                    notification.style.opacity = '0';
+                    notification.style.transition = 'opacity 0.5s';
+                    setTimeout(function() {
+                        document.body.removeChild(notification);
+                    }, 500);
+                }, 3000);
+            }
+            
+            // Обрабатываем Django сообщения
+            const messages = document.querySelectorAll('#django-messages > div');
+            messages.forEach(function(messageDiv) {
+                const message = messageDiv.getAttribute('data-message');
+                const tags = messageDiv.getAttribute('data-tags');
+                
+                // Явно проверяем успешные сообщения и позитивные действия
+                let isSuccess = false;
+                
+                // Проверка по тегам
+                if (tags && (tags.includes('success') || tags.includes('info'))) {
+                    isSuccess = true;
+                }
+                
+                // Проверка по содержимому сообщения для корзины 
+                const positiveMessages = [
+                    'Товар доданий до кошика',
+                    'доданий до кошика',
+                    'Кількість товару змінено',
+                    'видалено з кошика',
+                    'успішно'
+                ];
+                
+                // Если сообщение содержит одну из позитивных фраз
+                for (const positiveMsg of positiveMessages) {
+                    if (message.includes(positiveMsg)) {
+                        isSuccess = true;
+                        break;
+                    }
+                }
+                
+                // Показываем уведомление с анимацией через setTimeout
+                setTimeout(function() {
+                    showNotification(message, isSuccess);
+                }, 100);
+            });
+        });
+    </script>
+{% endif %}

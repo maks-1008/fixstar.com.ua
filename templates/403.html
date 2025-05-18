@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+  <style>
+    .error-container {
+        text-align: center;
+        padding: 100px 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .error-code {
+        font-size: 120px;
+        font-weight: bold;
+        color: #ffc107;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 5px rgba(255,193,7,0.2);
+    }
+    
+    .error-message {
+        font-size: 28px;
+        color: #495057;
+        margin-bottom: 30px;
+    }
+    
+    .error-description {
+        font-size: 18px;
+        color: #6c757d;
+        margin-bottom: 40px;
+    }
+    
+    .btn-home {
+        font-size: 18px;
+        padding: 10px 30px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-home:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .btn-login {
+        font-size: 18px;
+        padding: 10px 30px;
+        margin-left: 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-code">403</div>
+    <div class="error-message">Доступ заборонено</div>
+    <div class="error-description">
+        У вас немає прав доступу до цієї сторінки. Будь ласка, увійдіть в систему або зверніться до адміністратора.
+    </div>
+    <div>
+        <a href="{% url 'main:index' %}" class="btn btn-warning btn-home">
+            <i class="bi bi-house-fill me-2"></i>Головна
+        </a>
+        <a href="{% url 'user:login_signup' %}" class="btn btn-outline-warning btn-login">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Увійти
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+  <footer class="footer-custom bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">&copy; FixStar 2024 Всі права захищені</p>
+    </div>
+  </footer>
+{% endblock %} 
