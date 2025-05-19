@@ -210,6 +210,25 @@ def subcategory_products(request, slug):
     get_params = request.GET.copy()
     products = apply_product_filters(products, get_params)
     
+    # Проверяем, является ли это AJAX запросом
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    
+    # Если это AJAX запрос только для длин, возвращаем JSON с доступными длинами
+    if request.GET.get('get_lengths_only') == '1' and is_ajax:
+        active_filters = {k: v for k, v in get_params.items() if k in FILTER_FIELDS and k != 'lengths'}
+        if active_filters:
+            filtered_products = Product.objects.filter(subcategory=subcategory)
+            filtered_products = apply_product_filters(filtered_products, active_filters)
+            filtered_lengths = get_sorted_values(filtered_products, 'lengths', numeric_sort=True)
+        else:
+            filtered_lengths = cached_filters['lengths']
+        
+        return JsonResponse({
+            'status': 'success',
+            'lengths': filtered_lengths,
+            'message': f'Найдено {len(filtered_lengths)} длин для выбранных фильтров'
+        })
+    
     # Получаем длины с учетом всех активных фильтров, кроме lengths
     active_filters = {k: v for k, v in get_params.items() if k in FILTER_FIELDS and k != 'lengths'}
     if active_filters:
@@ -237,7 +256,19 @@ def subcategory_products(request, slug):
         'diameters': cached_filters['diameters'],
         'lengths': filtered_lengths,  # Используем отфильтрованные длины
         'current_filters': get_params.urlencode(),
+        'active_filters': {k: v for k, v in request.GET.items() if k in FILTER_FIELDS and v},
+        'products_count': products.count(),
     }
+    
+    # Для AJAX запросов возвращаем только HTML содержимое с дополнительным заголовком
+    if is_ajax:
+        response = render(request, 'goods/subcategory_detail.html', context)
+        response['X-Is-Ajax-Response'] = 'true'
+        response['X-Product-Count'] = str(products.count())
+        response['X-Current-Page'] = str(page_obj.number)
+        response['X-Total-Pages'] = str(paginator.num_pages)
+        return response
+    
     return render(request, 'goods/subcategory_detail.html', context)
 
 # Сигналы для очистки кэша

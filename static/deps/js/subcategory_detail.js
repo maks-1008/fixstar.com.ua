@@ -1,6 +1,96 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Subcategory detail script initialized');
     
+    // Глобальные переменные для отслеживания состояния
+    let isFiltering = false;
+    let originalScrollPosition = 0;
+    let scrollLocked = false;
+    let modalContentLoaded = false;
+    let modalContentLoading = false;
+    
+    // Отладочная функция
+    function debugLog(message) {
+        console.log('[DEBUG] ' + message);
+    }
+    
+    // Функция для блокировки скролла
+    function lockScroll() {
+        if (scrollLocked) return;
+        
+        originalScrollPosition = window.scrollY || window.pageYOffset;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${originalScrollPosition}px`;
+        document.body.style.width = '100%';
+        document.body.classList.add('scroll-locked');
+        
+        scrollLocked = true;
+        debugLog('Скролл заблокирован');
+    }
+    
+    // Функция для разблокировки скролла
+    function unlockScroll() {
+        if (!scrollLocked) return;
+        
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.classList.remove('scroll-locked');
+        
+        window.scrollTo(0, originalScrollPosition);
+        scrollLocked = false;
+        debugLog('Скролл разблокирован');
+    }
+    
+    // Обработчик клика по фильтру
+    function handleFilterClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (isFiltering) {
+            debugLog('Фильтрация уже выполняется');
+            return;
+        }
+        
+        const link = e.currentTarget;
+        const url = link.getAttribute('href');
+        
+        debugLog(`Клик по фильтру: ${url}`);
+        
+        // Блокируем скролл
+        lockScroll();
+        
+        // Показываем оверлей загрузки
+        const overlay = document.createElement('div');
+        overlay.className = 'loading-overlay active';
+        document.body.appendChild(overlay);
+        
+        // Делаем обычный переход
+        window.location.href = url;
+    }
+    
+    // Привязываем обработчики к фильтрам
+    function attachFilterHandlers() {
+        const filters = document.querySelectorAll('.filter-options a, .btn-filter');
+        filters.forEach(filter => {
+            filter.removeEventListener('click', handleFilterClick);
+            filter.addEventListener('click', handleFilterClick);
+        });
+    }
+    
+    // Предотвращаем автоматическую прокрутку при загрузке
+    window.addEventListener('load', function() {
+        const hash = window.location.hash;
+        if (hash) {
+            window.location.hash = '';
+        }
+        
+        // Разблокируем скролл
+        unlockScroll();
+    });
+    
+    // Инициализация
+    attachFilterHandlers();
+    
     // Функция для обновления фильтров длины
     function updateLengthFilters() {
         // Собираем текущие параметры фильтрации (кроме lengths)

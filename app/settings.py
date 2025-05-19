@@ -52,7 +52,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
-    "debug_toolbar",
+]
+
+# Добавляем debug_toolbar только в режиме разработки
+if DEBUG:
+    INSTALLED_APPS += ["debug_toolbar"]
+
+INSTALLED_APPS += [
     "import_export",
     "django_redis",
     "main",
@@ -73,9 +79,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "carts.middleware.CartMiddleware",
 ]
+
+# Добавляем debug_toolbar middleware только в режиме разработки
+if DEBUG:
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+
+MIDDLEWARE += ["carts.middleware.CartMiddleware"]
 
 ROOT_URLCONF = "app.urls"
 
@@ -213,12 +223,12 @@ LOGGING = {
     },
     "handlers": {
         "console": {
-            "level": "DEBUG",
+            "level": "INFO",
             "class": "logging.StreamHandler",
             "formatter": "verbose",
         },
         "file": {
-            "level": "DEBUG",
+            "level": "INFO",
             "class": "logging.FileHandler",
             "filename": BASE_DIR / "debug.log",
             "formatter": "verbose",
@@ -227,27 +237,27 @@ LOGGING = {
     "loggers": {
         "": {  # Корневой логгер для всего проекта
             "handlers": ["console", "file"],
-            "level": "DEBUG",  # Изменено с INFO на DEBUG
+            "level": "INFO",
             "propagate": True,
         },
         "django.request": {  # Логгер для запросов Django - для отслеживания ошибок 500
             "handlers": ["console", "file"],
-            "level": "DEBUG",
+            "level": "INFO",
             "propagate": False,
         },
         "app.middleware": {  # Логгер для нашего middleware
             "handlers": ["console", "file"],
-            "level": "DEBUG",
+            "level": "INFO",
             "propagate": False,
         },
         "orders": {  # Логгер для приложения orders
             "handlers": ["console", "file"],
-            "level": "DEBUG",
+            "level": "INFO",
             "propagate": False,
         },
         "django.db.backends": {  # Логгер для SQL-запросов
             "handlers": ["console"],
-            "level": "INFO",  # Поменяйте на DEBUG, чтобы видеть SQL-запросы
+            "level": "INFO",  # Оставляем INFO для SQL-запросов
             "propagate": False,
         },
     },

@@ -30,6 +30,16 @@ def remove_param(query_string, param_name):
     
     return urlencode(params, doseq=True)
 
+@register.filter
+def add_anchor(query_string, anchor_name):
+    """
+    Добавляет якорь к строке запроса для сохранения позиции
+    """
+    if not query_string:
+        return f'#{anchor_name}'
+    
+    return f'{query_string}#{anchor_name}'
+
 @register.simple_tag
 def update_url_param(url_params, param_name, param_value):
     """
