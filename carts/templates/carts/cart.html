@@ -1,8 +1,0 @@
-        {% if carts_has_items %}
-        <div class="d-flex justify-content-between align-items-center mt-4">
-            <div class="fw-bold fs-5">
-                Итоговая сумма: <span class="cart-total-price">{{ carts.total_price|floatformat:2 }}</span> грн
-            </div>
-            <a href="{% url 'orders:create_order' %}" class="btn btn-dark">Оформить заказ</a>
-        </div>
-        {% endif %} 
