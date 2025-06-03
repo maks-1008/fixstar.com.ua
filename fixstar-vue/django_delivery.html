@@ -1,0 +1,930 @@
+
+
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/deps/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/deps/css/my_css.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+     <link rel="stylesheet" href="/static/deps/css/style.css">
+    <!-- Добавляем Font Awesome из CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Стиль footer-a для главной страницы -->
+    
+  <link rel="stylesheet" href="/static/deps/css/my_footer_css.css">
+
+    <!-- Favicons for different platforms -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/deps/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/deps/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/deps/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/deps/favicon/site.webmanifest">
+    <title>Fixstar</title>
+    <input type="hidden" name="csrfmiddlewaretoken" value="OhvgCdOdOPxIhCy1yxGigbjB1aEPva0FRXvJSCUGaVIZ2cvWdREStvkawXEbkmyK">
+    <!-- Удаляем дублирующие ссылки на CSS файлы -->
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Інформация
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item  text-white" href="/deliverypayment/">Доставка і оплата</a></li>
+                                <li><a class="dropdown-item  text-white" href="/contacts/">Контактна інформація</a></li>
+                                <li><a class="dropdown-item  text-white" href="/about/">Про нас</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  text-white" href="/user/users-cart/">Кошик</a>
+                        </li>
+                        
+                            <li class="nav-item">
+                                <a class="nav-link  text-white" href="/user/signup/">Вхід</a>
+                            </li>
+                         
+                    </ul>
+                    <form class="d-flex" action="/search/" method="get">
+                        <input class="form-control me-2" type="search" name="q" placeholder="Поиск товаров..." aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Пошук</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="main-content">
+        
+        <div id="page-wrapper">
+            <section>
+                <div class="container">
+                    <!-- Каталог и корзина с фиксированным расположением на странице -->
+                        <div class="fixed-container">
+                            <div class="row mt-1 position-fixed z-3">
+                                <!-- Каталог -->
+                                <div class="dropdown mb-4">                                 
+                                    <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        Кріплення
+                                        <img class="mx-1" src="/static/deps/icons/grid-fill.svg" alt="Catalog Icon" width="16" height="16">
+                                    </button>    
+                                    <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Анкери</button>
+                                            <ul class="dropdown-menu bg-dark">   
+                                                <li><a class="dropdown-item text-white" href="/category/anker-molly/">Анкер MOLLY</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/anker-bierbah/">Анкер BIERBAH</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/anker-etkd/">Анкер ETKD</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/anker-redibolt/">Анкер REDIBOLT</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/anker-tfc/">Анкер TFC</a></li>  
+                                                <li><a class="dropdown-item text-white" href="/category/anker-tgs/">Анкер TGS</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gvint-turbo/">Гвинт TURBO</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/dyubel-eto/">Дюбель ETO</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/himichni-ankeri-ta-aksesuari/">Хімічні анкери та аксесуари</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/anker-ethd/">Анкер ETHD</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/anker-dvorozpirnij-slr/">Анкер дворозпірний SLR</a></li>
+                                            </ul>                                  
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Болти</button>
+                                            <ul class="dropdown-menu bg-dark">   
+                                                <li><a class="dropdown-item text-white" href="/category/bolti-z-shestigrannoyu-golovkoyu/">Болти з шестигранною головкою</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/bolti-z-kvadratnim-pidgolovkom/">Болти з квадратним підголовком</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/bolti-z-kilcem/">Болти з кільцем</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/bolti-spec/">Болти спец</a></li> 
+                                            </ul>                                  
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Гайки</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="/category/gajki-shestigranni/">Гайки шестигранні</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gajki-krugli/">Гайки круглі</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gajki-samostoporni/">Гайки самостопорні</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gajki-rim-gajka/">Рим-гайка</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gajka-z-flancem/">Гайка з фланцем</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gajka-koronchata/">Гайка корончата</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gajka-kovpachkova/">Гайка ковпачкова</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gajka-baranceva/">Гайка баранцева</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gajka-spec/">Гайка спец</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Гвинти</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="/category/gvinti-z-napivkrugloyu-golovkoyu/">Гвинти з напівкруглою головкою</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gvinti-z-potajnoyu-golovkoyu/">Гвинти з потайною головкою</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gvinti-z-cilindrichnoyu-golovkoyu/">Гвинти з циліндричною головкою</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gvinti-ustanovochni/">Гвинти установочні</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gvint-barancevij/">Гвинт баранцевий</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gvint-z-kilcem/">Гвинт з кільцем</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Дюбелі</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="/category/dyubeli-dlya-lgk/">Дюбелі для ЛГК</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/dyubeli-ramni/">Дюбелі рамні</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/dyubeli-universalni/">Дюбелі універсальні</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/dyubel-shvidkij-montazh/">Дюбель швидкий монтаж</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/termodyubel/">Термодюбель</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/dyubeli-dlya-gazobetona/">Дюбелі для газобетона</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Заклепки</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="/category/gajki-klepalni/">Гайки клепальні</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/zaklepki/">Заклепки</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/zaklepki-gost/">Заклепки ГОСТ</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Самонарізи</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="/category/samoriz-metall-pressshajba/">Саморіз  металл прессшайба</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/samoriz-vikonnij/">Саморіз віконний</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/samoriz-dlya-sendvich-panelej/">Саморіз для сендвіч панелей</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/samoriz-krovlya-ral/">Саморіз кровля RAL</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/samoriz-po-metalu-gostrij/">Саморіз по металу гострий</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/samoriz-po-metalu-z-burom/">Саморіз по металу з буром</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/samorizi-krovlya-cb/">Саморізи кровля ЦБ</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Шайби</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="/category/shajbi-standartni/">Шайби стандартні</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/shajbi-stoporni-dlya-rizbovih-zyednan/">Шайби стопорні для різьбових з'єднань</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Шплінти</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="/category/shplint-din-94/">Шплінт DIN 94</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/shplint-z-kilcem/">Шплінт з кільцем</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/shplint-pruzh/">Шплінт пруж</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Штифти</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="/category/shtift-pruzh/">Штифт пруж</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Шурупи</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="/category/shurup-gips-der/">Шуруп Гіпс дер</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/shurup-gips-metal/">Шуруп Гіпс метал</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/shurup-universalnij-potaj/">Шуруп універсальний потай</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/shurup-kryuk/">Шуруп-крюк</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/shurup-universalnij-pkr/">Шуруп універсальний пкр</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gvint-dlya-dereva-din571/">Гвинт для дерева DIN571</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/gvintshurup-kombinovanij/">Гвинт/шуруп комбінований</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/shurupi-konstrukcijni/">Шурупи конструкційні</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <button class="dropdown-item text-white" type="button">Стрижні</button>
+                                            <ul class="dropdown-menu bg-dark">
+                                                <li><a class="dropdown-item text-white" href="/category/gajki-klepalni/">Гайки клепальні</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/zaklepki/">Заклепки</a></li>
+                                                <li><a class="dropdown-item text-white" href="/category/zaklepki-gost/">Заклепки ГОСТ</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                    <div class="dropdown mb-4">
+                                        
+                                        <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Фарби
+                                            <img class="mx-1" src="/static/deps/icons/grid-fill.svg" alt="Catalog Icon" width="16" height="16">
+                                        </button>
+                                        
+                                        <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                                            <li class="dropdown-submenu">
+                                                <button class="dropdown-item text-white" type="button">1</button>
+                                                <ul class="dropdown-menu bg-dark">
+                                                    
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <button class="dropdown-item text-white" type="button">2</button>
+                                                <ul class="dropdown-menu bg-dark">
+                                                    
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown-submenu">
+                                                <button class="dropdown-item text-white" type="button">3</button>
+                                                <ul class="dropdown-menu bg-dark">
+                                                    
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="dropdown mb-4">
+                                            
+                                        <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Інструмент
+                                            <img class="mx-1" src="/static/deps/icons/grid-fill.svg" alt="Catalog Icon" width="16" height="16">
+                                        </button>
+                                        
+                                        <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                                            
+                                        </ul>
+                                            
+                                    </div>
+                                <!-- Разметка модального окна корзины -->
+                                    <div class="dropdown mb-4">
+                                        
+
+<input type="hidden" name="csrfmiddlewaretoken" value="OhvgCdOdOPxIhCy1yxGigbjB1aEPva0FRXvJSCUGaVIZ2cvWdREStvkawXEbkmyK">
+
+<!-- Кнопка корзины -->
+<button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <img class="mx-1" src="/static/deps/icons/basket2-fill.svg" alt="Catalog Icon" width="24" height="24">
+    
+        <span id="goods-in-cart-count">0</span>
+    
+</button>
+
+<!-- Разметка модального окна корзины -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h5 class="text-center cart-header" id="exampleModalLabel">Кошик</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container px-0" id="cart-items-container">
+                    <!-- Включаем универсальный шаблон корзины -->
+                    
+
+
+<!-- Основное содержимое корзины - используется во всех видах корзины -->
+<!-- Параметры:
+     show_buttons - показывать ли кнопки оформления заказа (по умолчанию: True)
+     compact - компактное отображение (по умолчанию: False)
+-->
+
+<!-- Таблица товаров -->
+<div class="table-responsive" style="max-width: 100%; overflow-x: auto;">
+    <table class="product-table table table-striped table-hover mb-3" style="width: 100%;">
+        <thead class="table-light">
+            <tr>
+                <th style="width: 8%;"></th>
+                <th style="width: 30%;">АРТИКУЛ, НАЗВА ТОВАРУ</th>
+                <th style="width: 15%;">КІЛЬКІСТЬ</th>
+                <th style="width: 15%;">ЦІНА</th>
+                <th style="width: 15%;">СУМА</th>
+                <th style="width: 5%;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                
+                    
+                        <tr>
+                            <td colspan="6" class="text-center">Кошик порожній</td>
+                        </tr>
+                    
+                
+            
+        </tbody>
+    </table>
+</div>
+
+<!-- Итоговая информация о корзине -->
+<div class="card mb-3 shadow-lg">
+    <div class="card-footer">
+        <p class="float-left">Всього позиції товарів<strong> 
+            
+                <span id="cart-items-count">0</span>
+            
+        </strong> на суму</p>
+        <h4 class="float-left"><strong>
+            
+                <span id="cart-total-price">0</span>
+            
+        грн</strong></h4>
+    </div>
+</div>
+
+<!-- Кнопка оформления заказа (опционально) -->
+
+<div class="text-center mb-3">
+    <a class="btn" href="/orders/create/" style="background-color: #ffa023; color: white;">
+        Оформити замовлення
+    </a>
+</div>
+
+
+<!-- Модальные окна для изображений товаров -->
+
+    
+        
+    
+
+
+<!-- Скрипты для корзины -->
+<script>
+    // Глобальная функция для инициализации обработчиков
+    window.initCartHandlers = function() {
+        console.log("Initializing cart handlers from global function");
+        
+        // Получаем CSRF-токен из cookie
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        // Получаем токен
+        const csrftoken = getCookie('csrftoken');
+        
+        // Проверяем наличие элементов в DOM
+        console.log("Cart quantity inputs:", document.querySelectorAll('.cart-quantity-input').length);
+        console.log("Remove buttons:", document.querySelectorAll('.remove-from-cart').length);
+        console.log("Session remove buttons:", document.querySelectorAll('.session-remove-btn').length);
+        
+        // Обработка изменения количества товара
+        function initQuantityChangeHandlers() {
+            console.log("Initializing quantity handlers");
+            const quantityInputs = document.querySelectorAll('.cart-quantity-input');
+            console.log("Found quantity inputs:", quantityInputs.length);
+            
+            quantityInputs.forEach(input => {
+                // Сохраняем оригинальное значение
+                let originalValue;
+                
+                // Удаляем существующие обработчики, чтобы избежать дублирования
+                input.removeEventListener('focus', onFocus);
+                input.removeEventListener('change', onChange);
+                
+                function onFocus() {
+                    originalValue = this.value;
+                    console.log("Focus - original value:", originalValue);
+                }
+                
+                // Функция обработки изменения количества товара
+                function onChange() {
+                    console.log("Change event fired");
+                    const value = parseInt(this.value);
+                    if (isNaN(value) || value < 1) {
+                        this.value = originalValue || 1;
+                        showNotification("Кількість не може бути менше 1", false);
+                        return;
+                    }
+                    
+                    // Получаем родительскую строку
+                    const parentRow = this.closest('tr');
+                    
+                    // Получаем данные для запроса
+                    const productId = this.getAttribute('data-product-id');
+                    const cartId = this.getAttribute('data-cart-id');
+                    const changeUrl = this.getAttribute('data-cart-change-url');
+                    
+                    if (!changeUrl) {
+                        console.error('URL для изменения не найден');
+                        return;
+                    }
+                    
+                    console.log("Sending request to:", changeUrl, "product:", productId, "cart:", cartId, "quantity:", value);
+                    
+                    // Показываем индикатор загрузки
+                    this.disabled = true;
+                    this.style.opacity = '0.5';
+                    
+                    // Собираем данные для отправки
+                    let requestData;
+                    
+                    if (changeUrl.includes('session-change')) {
+                        // Для сессии
+                        requestData = new URLSearchParams();
+                        requestData.append('product_id', productId);
+                        requestData.append('quantity', value);
+                    } else {
+                        // Для авторизованного пользователя
+                        requestData = new URLSearchParams();
+                        if (cartId) requestData.append('cart_id', cartId);
+                        requestData.append('quantity', value);
+                    }
+                    
+                    // Добавляем CSRF-токен
+                    requestData.append('csrfmiddlewaretoken', csrftoken);
+                    
+                    console.log("Request data:", requestData.toString());
+                    
+                    // Отправляем запрос
+                    fetch(changeUrl, {
+                        method: 'POST',
+                        body: requestData,
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': csrftoken
+                        }
+                    })
+                    .then(response => {
+                        console.log("Response status:", response.status);
+                        if (!response.ok) {
+                            throw new Error('HTTP Error ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("Response data:", data);
+                        
+                        // Восстанавливаем инпут
+                        this.disabled = false;
+                        this.style.opacity = '1';
+                        
+                        if (data.success) {
+                            // Показываем уведомление только если есть сообщение 
+                            if (data.message) {
+                                showNotification(data.message, true);
+                            }
+                            
+                            // Обновляем цену товара
+                            if (data.item_price) {
+                                const itemPriceCell = parentRow.querySelector('.item-total-price');
+                                if (itemPriceCell) {
+                                    itemPriceCell.textContent = data.item_price + ' грн';
+                                }
+                            }
+                            
+                            // Обновляем общую сумму корзины
+                            if (data.cart_total) {
+                                const totalEls = document.querySelectorAll('#cart-total-price');
+                                totalEls.forEach(el => {
+                                    el.textContent = data.cart_total;
+                                });
+                            }
+                            
+                            // Обновляем счетчик товаров
+                            if (data.cart_count) {
+                                updateCartCounter(data.cart_count);
+                            }
+                            
+                            // Вызываем событие для обновления корзины
+                            if (typeof jQuery !== 'undefined') {
+                                jQuery(document).trigger('cartUpdated', data);
+                                console.log("Triggered cartUpdated event");
+                            }
+                        } else {
+                            showNotification(data.message || "Помилка при оновленні кошика", false);
+                            this.value = originalValue || 1;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        
+                        // Восстанавливаем поле ввода и значение
+                        this.disabled = false;
+                        this.style.opacity = '1';
+                        this.value = originalValue || 1;
+                        
+                        // Перезагружаем страницу, чтобы получить обновленные данные
+                        // Это обходное решение, если AJAX не работает
+                        showNotification("Оновлюємо дані кошика...", true);
+                        setTimeout(() => window.location.reload(), 1500);
+                    });
+                }
+                
+                // Добавляем обработчики
+                input.addEventListener('focus', onFocus);
+                input.addEventListener('change', onChange);
+                
+                // Для диагностики
+                console.log(`Added handlers to input for product ID: ${input.getAttribute('data-product-id')}`);
+            });
+        }
+        
+        // Инициализация обработчиков для кнопок удаления
+        function initRemoveButtonHandlers() {
+            console.log("Initializing remove handlers");
+            // Обработка удаления товара для авторизованных пользователей
+            const removeButtons = document.querySelectorAll('.remove-from-cart');
+            console.log("Found remove buttons:", removeButtons.length);
+            
+            removeButtons.forEach(function(button) {
+                // Удаляем существующие обработчики
+                const oldClick = button.onclick;
+                button.onclick = null;
+                
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    if (!confirm('Ви дійсно хочете видалити цей товар з кошика?')) {
+                        return;
+                    }
+                    
+                    const productId = this.getAttribute('data-product-id');
+                    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+                    const url = this.getAttribute('href');
+                    
+                    console.log("Removing product:", productId, "URL:", url);
+                    
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': csrfToken
+                        },
+                        credentials: 'same-origin'
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('HTTP Error ' + response.status);
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            const row = button.closest('tr');
+                            if (row) row.remove();
+                            showNotification(data.message, true);
+                            updateCartCounter(data.cart_count);
+                            updateCartPrices(null, data.cart_total, null);
+                            
+                            // Триггерим обновление корзины
+                            if (typeof jQuery !== 'undefined') {
+                                jQuery(document).trigger('cartUpdated', data);
+                                console.log("Triggered cartUpdated event after remove");
+                            }
+                        } else {
+                            showNotification(data.message || "Помилка при видаленні товару", false);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification("Помилка при видаленні товару", false);
+                    });
+                });
+                
+                // Для диагностики
+                console.log(`Added handler to remove button for product ID: ${button.getAttribute('data-product-id')}`);
+            });
+            
+            // Обработка удаления товаров из сессионной корзины
+            const sessionRemoveButtons = document.querySelectorAll('.session-remove-btn');
+            console.log("Found session remove buttons:", sessionRemoveButtons.length);
+            
+            sessionRemoveButtons.forEach(function(button) {
+                // Удаляем существующие обработчики
+                const oldClick = button.onclick;
+                button.onclick = null;
+                
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    if (!confirm('Ви дійсно хочете видалити цей товар з кошика?')) {
+                        return;
+                    }
+                    
+                    const productId = this.getAttribute('data-product-id');
+                    if (!productId) return;
+                    
+                    console.log("Removing session product:", productId);
+                    
+                    const csrfTokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
+                    if (!csrfTokenElement) {
+                        console.error('CSRF token not found');
+                        showNotification("Помилка безпеки: CSRF токен не знайдено", false);
+                        return;
+                    }
+                    const csrfToken = csrfTokenElement.value;
+                    
+                    fetch('/cart/session-remove/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: `product_id=${productId}`,
+                        credentials: 'same-origin'
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('HTTP Error ' + response.status);
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            const row = button.closest('tr');
+                            if (row) row.remove();
+                            showNotification(data.message, true);
+                            updateCartCounter(data.cart_count);
+                            updateCartPrices(null, data.cart_total, null);
+                            
+                            // Триггерим обновление корзины
+                            if (typeof jQuery !== 'undefined') {
+                                jQuery(document).trigger('cartUpdated', data);
+                                console.log("Triggered cartUpdated event after session remove");
+                            }
+                        } else {
+                            showNotification(data.message || "Помилка при видаленні товару", false);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification("Помилка при видаленні товару", false);
+                    });
+                });
+                
+                // Для диагностики
+                console.log(`Added handler to session remove button for product ID: ${button.getAttribute('data-product-id')}`);
+            });
+        }
+        
+        // Функция для отображения уведомлений
+        function showNotification(message, isSuccess) {
+            // Создаем элемент уведомления
+            const notification = document.createElement('div');
+            notification.className = 'cart-notification ' + (isSuccess ? 'success' : 'error');
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.padding = '10px 20px';
+            notification.style.backgroundColor = isSuccess ? '#28a745' : '#dc3545';
+            notification.style.color = 'white';
+            notification.style.borderRadius = '4px';
+            notification.style.zIndex = '9999';
+            notification.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+            
+            // Добавляем уведомление в DOM
+            document.body.appendChild(notification);
+            
+            // Удаляем уведомление через 3 секунды
+            setTimeout(function() {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.5s';
+                setTimeout(function() {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+        }
+        
+        // Функция для обновления счетчика товаров в корзине
+        function updateCartCounter(count) {
+            const counters = document.querySelectorAll('#goods-in-cart-count, #cart-items-count');
+            counters.forEach(counter => {
+                if (counter) counter.textContent = count;
+            });
+        }
+        
+        // Функция для обновления цен в корзине
+        function updateCartPrices(itemPrice, cartTotal, rowElement) {
+            // Обновляем цену позиции
+            if (rowElement && itemPrice) {
+                const priceCell = rowElement.querySelector('.item-total-price');
+                if (priceCell) {
+                    priceCell.textContent = itemPrice.toFixed(2) + ' грн';
+                }
+            }
+            
+            // Обновляем общую сумму корзины
+            if (cartTotal) {
+                const totalElements = document.querySelectorAll('#cart-total-price');
+                totalElements.forEach(element => {
+                    if (element) element.textContent = cartTotal.toFixed(2);
+                });
+            }
+        }
+        
+        // Инициализируем все обработчики
+        initQuantityChangeHandlers();
+        initRemoveButtonHandlers();
+        
+        console.log("All cart handlers initialized successfully");
+        return true;
+    };
+    
+    // Добавляем обработчик события DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("Cart content script loaded");
+        
+        // Инициализируем обработчики при загрузке страницы
+        window.initCartHandlers();
+        
+        // Если страница была загружена с модальным окном, инициализируем снова через задержку
+        setTimeout(function() {
+            window.initCartHandlers();
+            console.log("Re-initialized handlers after timeout");
+        }, 500);
+    });
+</script>
+
+<input type="hidden" name="csrfmiddlewaretoken" value="OhvgCdOdOPxIhCy1yxGigbjB1aEPva0FRXvJSCUGaVIZ2cvWdREStvkawXEbkmyK"> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                                    </div> 
+                                <!-- Закончилась разметка коталога -->   
+                            </div>
+                        </div>        
+                    <!-- Закончилась разметка модального окна -->
+                </div>
+                <!-- Контент -->
+                <div class="container">
+                    <div class="row mt-1">
+                        <div class="col-lg-2">
+                            <!-- Пустой блок на Ваше усмотрение -->
+                        </div>
+                        <div class="col-lg-10">
+                            <!-- Контент на странице -->
+                            
+
+<!-- Скрываем стандартные Django сообщения, но добавляем скрипт для их отображения через JS -->
+ 
+                            <!-- Toast уведомления -->
+                             
+   <div class="mt-5 pt-5 bg-white custom-shadow rounded"> 
+       <h2 class="m-2"><strong>Доставка і оплата</strong></h2>
+       <p class="m-2"></p> 
+
+       
+           <h5 class="m-2"><strong>Доставка:</strong></h5>
+           <ul class="m-2">
+               
+                   <li>по Україні кур&#x27;єрами транспортних компаній. Доставку товару оплачує покупець згідно з тарифами перевізника;</li>
+               
+                   <li>в Полтаві та Полтавській області можлива безкоштовна доставка власним транспортом компанії при сумі замовлення від 5000 грн;</li>
+               
+                   <li>самовивіз зі складу в Полтаві, вул. Чумацький Шлях, 72, графік роботи складу 9:00-16:00 щодня.</li>
+               
+           </ul>
+       
+
+       
+           <h5 class="m-2"><strong>Способи оплати:</strong></h5>
+           <ul class="m-2">
+               
+                   <li>накладений платіж;</li>
+               
+                   <li>оплата на сайті платіжною картою;</li>
+               
+                   <li>безготівковий розрахунок;</li>
+               
+                   <li>відстрочка платежу згідно з індивідуальним договором (для постійних клієнтів).</li>
+               
+           </ul>
+       
+
+       <p class="m-2">Відвантаження товару замовнику відбувається в день оплати або наступного робочого дня, якщо оплата надійшла після 14:00. Умови оплати та доставки узгоджуються під час остаточного оформлення замовлення.</p>
+   </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>  
+
+    
+  <footer class="footer-custom bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">&copy; FixStar 2024 Всі права захищені</p>
+    </div>
+  </footer>
+
+
+    <script src="/static/deps/js/jquery/jquery-3.7.0.min.js"></script>
+    <script src="/static/deps/js/jquery-events.js"></script>
+    <script src="/static/deps/js/jquery-ajax.js"></script>
+    <script src="/static/deps/js/bootstrap/bootstrap.bundle.min.js"></script>
+    
+    <!-- Добавляем скрипт для AJAX обработки корзины -->
+    <script src="/static/deps/js/modal_cart.js"></script>
+    <script src="/static/deps/js/subcategory_detail.js"></script>
+    <script src="/static/deps/js/cart_debug.js"></script>
+    <script src="/static/deps/js/cart_fix.js"></script>
+    <script src="/static/deps/js/scripts.js"></script>
+    
+    <!-- Скрипт для отладки и синхронизации корзины -->
+    <script>
+        console.log('Base template script loaded');
+        
+        // Проверяем, загружены ли необходимые скрипты
+        $(document).ready(function() {
+            console.log('Document ready in base template');
+            console.log('jQuery version:', $.fn.jquery);
+            console.log('refreshCartModal exists:', typeof window.refreshCartModal === 'function');
+            console.log('initCartHandlers exists:', typeof window.initCartHandlers === 'function');
+            
+            // Если функция refreshCartModal не определена, создаем ее
+            if (typeof window.refreshCartModal !== 'function') {
+                console.warn('refreshCartModal not found, creating placeholder');
+                window.refreshCartModal = function() {
+                    console.log('Placeholder refreshCartModal called, reloading page');
+                    location.reload();
+                };
+            }
+            
+            // Добавляем обработчик для событий корзины
+            $(document).on('cartUpdated', function(e, data) {
+                console.log('cartUpdated event captured in base template', data);
+            });
+            
+            // Загружаем текущее состояние корзины при загрузке страницы
+            setTimeout(function() {
+                if (typeof window.refreshCartModal === 'function') {
+                    console.log('Updating cart on page load');
+                    
+                    // Обновляем счетчик корзины без обновления модального окна
+                    $.ajax({
+                        url: '/cart/modal-content/',
+                        type: 'GET',
+                        dataType: 'html',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        success: function(response) {
+                            try {
+                                const tempDiv = document.createElement('div');
+                                tempDiv.innerHTML = response;
+                                const cartCount = $(tempDiv).find('#cart-items-count').text();
+                                if (cartCount && cartCount.trim()) {
+                                    $('#goods-in-cart-count').text(cartCount);
+                                    console.log('Updated cart count from base template:', cartCount);
+                                }
+                            } catch (e) {
+                                console.error('Error updating cart count:', e);
+                            }
+                        }
+                    });
+                }
+            }, 1000);
+            
+            // Функция для глобальной отладки состояния корзины
+            window.debugCart = function() {
+                console.log('-------------- CART DEBUG INFO --------------');
+                console.log('Modal visible:', $('#exampleModal').hasClass('show'));
+                console.log('Cart count element exists:', $('#goods-in-cart-count').length > 0);
+                console.log('Current cart count:', $('#goods-in-cart-count').text());
+                
+                // Запрашиваем актуальное состояние корзины с сервера
+                $.ajax({
+                    url: '/cart/modal-content/',
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(response) {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = response;
+                        console.log('Server cart count:', $(tempDiv).find('#cart-items-count').text());
+                        console.log('Server response length:', response.length);
+                    }
+                });
+                
+                if (typeof window.refreshCartModal === 'function') {
+                    console.log('refreshCartModal is defined');
+                    window.refreshCartModal();
+                } else {
+                    console.warn('refreshCartModal is NOT defined');
+                }
+                
+                if (typeof window.initCartHandlers === 'function') {
+                    console.log('initCartHandlers is defined');
+                } else {
+                    console.warn('initCartHandlers is NOT defined');
+                }
+                
+                console.log('-------------------------------------------');
+            };
+        });
+    </script>
+</body>
+
+</html>
