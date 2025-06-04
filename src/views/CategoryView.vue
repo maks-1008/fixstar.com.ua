@@ -57,10 +57,10 @@ export default {
       // this.fetchProducts(categorySlug.value)
     })
 
-    const fetchProducts = (categorySlug) => {
+    const fetchProducts = () => {
       // Здесь будет запрос к API
       // В реальном приложении будет что-то типа:
-      // axios.get(`/api/category/${categorySlug}/products`)
+      // axios.get(`/api/category/${categorySlug.value}/products`)
       //   .then(response => {
       //     products.value = response.data.products
       //     categoryTitle.value = response.data.title
