@@ -7,8 +7,8 @@ export default defineComponent({
   name: 'App',
   components: {
     TheNavbar,
-    Sidebar
-  }
+    Sidebar,
+  },
 })
 </script>
 
@@ -22,7 +22,7 @@ export default defineComponent({
 
 <style>
 /* Импорт Bootstrap Icons */
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css');
 
 .app-container {
   width: 100%;
@@ -50,8 +50,37 @@ body {
 
 /* Стили для карточек с тенями */
 .card-shadow {
-  box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.4), 0 0 50px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 0 25px 5px rgba(0, 0, 0, 0.4),
+    0 0 50px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background-color: white;
+}
+
+/* Медиа-запросы для мобильной адаптации */
+@media (max-width: 768px) {
+  .router-view-container {
+    margin-left: 0;
+    padding-top: 60px;
+  }
+
+  /* Уменьшаем размер шрифтов на малых экранах */
+  body {
+    font-size: 14px;
+  }
+
+  /* Корректировка для лого и контейнеров */
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
 }
 </style>

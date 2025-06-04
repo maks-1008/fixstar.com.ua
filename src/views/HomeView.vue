@@ -13,7 +13,7 @@ onMounted(async () => {
 <template>
   <div class="home-view">
     <div class="background-container"></div>
-    
+
     <div class="content-overlay">
       <!-- Телефоны справа вверху -->
       <div class="phones-container">
@@ -29,9 +29,7 @@ onMounted(async () => {
       </div>
 
       <!-- Копирайт внизу -->
-      <footer class="copyright">
-        © FixStar 2024 Всі права захищені
-      </footer>
+      <footer class="copyright">© FixStar 2024 Всі права захищені</footer>
     </div>
   </div>
 </template>
@@ -126,19 +124,50 @@ onMounted(async () => {
   z-index: 100;
 }
 
+/* Медиа-запросы для мобильной адаптации */
 @media (max-width: 768px) {
   .phones-container {
-    position: static;
-    margin: 20px;
-    align-items: center;
+    top: 100px;
+    right: 15px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
   }
-  
+
   .phone-number {
-    font-size: 30px;
+    font-size: 28px;
+  }
+
+  .operator-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 576px) {
+  .phones-container {
+    top: 70px;
+    right: 10px;
+    gap: 5px;
+  }
+
+  .phone-item {
+    gap: 8px;
+  }
+
+  .phone-number {
+    font-size: 20px;
+  }
+
+  .operator-icon {
+    width: 24px;
+    height: 24px;
   }
 
   .copyright {
-    position: fixed;
+    font-size: 14px;
+    height: 30px;
   }
 }
 </style>
