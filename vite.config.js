@@ -13,4 +13,8 @@ export default defineConfig({
     },
   },
   base: '/fixstar.com.ua/',
+  build: {
+    outDir: 'dist',
+    assetsInlineLimit: 0, // Відключаємо інлайн малих файлів
+  },
 })
