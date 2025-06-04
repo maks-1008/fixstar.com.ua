@@ -174,6 +174,10 @@ h1 {
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
+  .background-container {
+    background-image: url('/images/bg-image5.jpg');
+  }
+
   .contacts-card {
     position: relative;
     top: auto;

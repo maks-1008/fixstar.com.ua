@@ -182,6 +182,10 @@ p {
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
+  .background-container {
+    background-image: url('/images/bg-image5.jpg');
+  }
+
   .about-card {
     position: relative;
     top: auto;

@@ -318,6 +318,10 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .background-container {
+    background-image: url('/images/bg-image5.jpg');
+  }
+
   .category-content {
     position: relative;
     top: auto;

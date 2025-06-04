@@ -126,6 +126,10 @@ onMounted(async () => {
 
 /* Медиа-запросы для мобильной адаптации */
 @media (max-width: 768px) {
+  .background-container {
+    background-image: url('/images/bg-image5.jpg');
+  }
+
   .phones-container {
     top: 100px;
     right: 15px;
