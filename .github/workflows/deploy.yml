@@ -20,16 +20,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd fixstar-vue
           npm ci
 
       - name: Build
         run: |
-          cd fixstar-vue
           npm run build
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: fixstar-vue/dist
+          folder: dist
           branch: gh-pages
