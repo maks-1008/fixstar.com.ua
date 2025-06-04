@@ -7,54 +7,56 @@ import Sidebar from '@/components/Sidebar.vue'
 export default {
   name: 'CategoryView',
   components: {
-    Sidebar
+    Sidebar,
   },
   setup() {
     const productStore = useProductStore()
     const route = useRoute()
     const router = useRouter()
-    
+
     const loading = ref(true)
     const categorySlug = computed(() => route.params.slug)
-    
+
     const category = computed(() => {
       return productStore.getCategoryBySlug(categorySlug.value)
     })
-    
+
     const subcategories = computed(() => {
       if (!category.value) return []
       return productStore.getSubcategoriesByCategory(category.value.id)
     })
-    
+
     const products = ref([])
     const categoryTitle = ref('Болти з шестигранною головкою')
-    const categoryDescription = ref("Болти з шестигранною головкою застосовуються для створення нерозємних зєднань. Вони мають шестигранну головку та різьбу метричну.")
-    
+    const categoryDescription = ref(
+      'Болти з шестигранною головкою застосовуються для створення нерозємних зєднань. Вони мають шестигранну головку та різьбу метричну.',
+    )
+
     onMounted(async () => {
       if (productStore.categories.length === 0) {
         await productStore.fetchCategories()
       }
-      
+
       if (productStore.subcategories.length === 0) {
         await productStore.fetchSubcategories()
       }
-      
+
       loading.value = false
-      
+
       // Если категория не найдена, переходим на 404
       if (!loading.value && !category.value) {
         router.push({ name: 'notFound' })
       }
-      
+
       // Здесь будет запрос к API для получения товаров категории
       // Используем параметр маршрута для определения какую категорию загружать
       console.log('Loading category:', categorySlug.value)
-      
+
       // Заглушка для демо-данных
       // В реальном приложении тут будет API запрос
       // this.fetchProducts(categorySlug.value)
     })
-    
+
     const fetchProducts = (categorySlug) => {
       // Здесь будет запрос к API
       // В реальном приложении будет что-то типа:
@@ -65,7 +67,7 @@ export default {
       //     categoryDescription.value = response.data.description
       //   })
     }
-    
+
     return {
       category,
       subcategories,
@@ -73,16 +75,16 @@ export default {
       products,
       categoryTitle,
       categoryDescription,
-      fetchProducts
+      fetchProducts,
     }
-  }
+  },
 }
 </script>
 
 <template>
   <div class="category-view">
     <div class="background-container"></div>
-    
+
     <div class="content-overlay">
       <!-- Импортируем боковое меню -->
       <Sidebar />
@@ -99,59 +101,45 @@ export default {
           <!-- Здесь будет список товаров -->
           <div v-for="product in products" :key="product.id" class="product-card">
             <div class="product-image">
-              <img :src="product.image" :alt="product.name">
+              <img :src="product.image" :alt="product.name" />
             </div>
             <div class="product-info">
               <h3>{{ product.name }}</h3>
               <div class="product-code">{{ product.code }}</div>
-              <div class="product-price">
-                {{ product.price }} грн
-              </div>
-              <button class="add-to-cart-btn">
-                <i class="bi bi-cart-plus"></i> В корзину
-              </button>
+              <div class="product-price">{{ product.price }} грн</div>
+              <button class="add-to-cart-btn"><i class="bi bi-cart-plus"></i> В корзину</button>
             </div>
           </div>
 
           <!-- Пример продуктов для демонстрации -->
           <div v-if="products.length === 0" class="product-card">
             <div class="product-image">
-              <img src="/images/goods/DIN931.webp" alt="DIN 931">
+              <img src="/images/goods/DIN931.webp" alt="DIN 931" />
             </div>
             <div class="product-info">
               <h3>DIN 931</h3>
               <div class="product-code">Болт з шестигранною головкою</div>
-              <div class="product-price">
-                25.50 грн
-              </div>
-              <button class="add-to-cart-btn">
-                <i class="bi bi-cart-plus"></i> В корзину
-              </button>
+              <div class="product-price">25.50 грн</div>
+              <button class="add-to-cart-btn"><i class="bi bi-cart-plus"></i> В корзину</button>
             </div>
           </div>
 
           <div v-if="products.length === 0" class="product-card">
             <div class="product-image">
-              <img src="/images/goods/DIN933.webp" alt="DIN 933">
+              <img src="/images/goods/DIN933.webp" alt="DIN 933" />
             </div>
             <div class="product-info">
               <h3>DIN 933</h3>
               <div class="product-code">Болт з шестигранною головкою</div>
-              <div class="product-price">
-                28.75 грн
-              </div>
-              <button class="add-to-cart-btn">
-                <i class="bi bi-cart-plus"></i> В корзину
-              </button>
+              <div class="product-price">28.75 грн</div>
+              <button class="add-to-cart-btn"><i class="bi bi-cart-plus"></i> В корзину</button>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Копирайт внизу -->
-      <footer class="copyright">
-        © FixStar 2024 Всі права захищені
-      </footer>
+      <footer class="copyright">© FixStar 2024 Всі права захищені</footer>
     </div>
   </div>
 </template>
@@ -172,7 +160,7 @@ export default {
   position: fixed;
   width: 100%;
   height: 100%;
-  background-image: url('/images/bg-image.jpg');
+  background-image: url('/images/bg-image4.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -234,8 +222,10 @@ export default {
   background: #fff;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -243,7 +233,7 @@ export default {
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
 
 .product-image {
@@ -347,4 +337,4 @@ export default {
     position: fixed;
   }
 }
-</style> 
+</style>

@@ -50,7 +50,7 @@ onMounted(async () => {
   position: fixed;
   width: 100%;
   height: 100%;
-  background-image: url('/images/bg-image.jpg');
+  background-image: url('/images/bg-image4.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
