@@ -1,35 +1,42 @@
-# fixstar-vue
+# FixStar.com.ua
 
-This template should help get you started developing with Vue 3 in Vite.
+Інтернет-магазин кріпильних матеріалів, фарби та інструментів
 
-## Recommended IDE Setup
+## Технології
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Vue.js 3
+- Vite
+- Bootstrap 5
+- CSS
 
-## Customize configuration
+## Локальний розробка
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+1. Клонувати репозиторій
 
-## Project Setup
+```
+git clone https://github.com/maks-1008/fixstar.com.ua.git
+cd fixstar.com.ua
+```
 
-```sh
+2. Встановити залежності
+
+```
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+3. Запустити локальний сервер
 
-```sh
+```
 npm run dev
 ```
 
-### Compile and Minify for Production
+## Збірка для production
 
-```sh
+```
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## Деплой на GitHub Pages
 
-```sh
-npm run lint
-```
+Веб-сайт автоматично розгортається при пуші в гілку `main` і доступний за адресою:
+https://maks-1008.github.io/fixstar.com.ua/
