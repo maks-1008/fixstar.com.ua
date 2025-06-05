@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar" :class="{ 'mobile-hidden': isMobileAndNotHome }">
     <div class="category-menu">
       <!-- Кріплення -->
       <div class="dropdown-wrapper">
@@ -354,18 +354,34 @@
 <script>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useCartStore } from '@/stores'
+import { useRoute } from 'vue-router'
 
 export default {
-  name: 'Sidebar',
+  name: 'SidebarMenu',
   setup() {
     const cartStore = useCartStore()
+    const route = useRoute()
     const activeMenu = ref(null)
     const activeSubmenu = ref(null)
+
+    // Проверяем, находимся ли мы на главной странице и на мобильном устройстве
+    const isMobileAndNotHome = computed(() => {
+      // Проверка на мобильное устройство (ширина экрана)
+      const isMobile = window.innerWidth <= 768
+      // Проверка, что текущий путь не главная страница
+      const isNotHome = route.path !== '/'
+      return isMobile && isNotHome
+    })
 
     // Вычисляемое свойство для количества товаров в корзине
     const cartCount = computed(() => {
       return cartStore.totalCount || 0
     })
+
+    // Обработчик изменения размера окна
+    const handleResize = () => {
+      // Пересчитываем значение isMobileAndNotHome
+    }
 
     onMounted(() => {
       // Загрузка корзины при монтировании компонента
@@ -373,11 +389,15 @@ export default {
 
       // Добавление обработчика для закрытия меню при клике вне компонента
       document.addEventListener('click', handleOutsideClick)
+
+      // Добавляем обработчик изменения размера окна
+      window.addEventListener('resize', handleResize)
     })
 
     // Удаление обработчика при уничтожении компонента
     onUnmounted(() => {
       document.removeEventListener('click', handleOutsideClick)
+      window.removeEventListener('resize', handleResize)
     })
 
     // Обработчик клика вне компонента
@@ -415,6 +435,7 @@ export default {
       toggleMenu,
       toggleSubmenu,
       closeAllMenus,
+      isMobileAndNotHome,
     }
   },
 }
@@ -537,6 +558,11 @@ export default {
 
 .cart-btn:hover {
   background-color: #e89020;
+}
+
+/* Скрываем сайдбар на мобильных устройствах на всех страницах кроме главной */
+.mobile-hidden {
+  display: none !important;
 }
 
 /* Медиа-запросы для мобильной адаптации */

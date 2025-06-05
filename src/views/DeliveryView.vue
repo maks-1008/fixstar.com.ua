@@ -180,14 +180,29 @@ p {
     background-image: url('/images/bg-image5.jpg');
   }
 
+  .delivery-view {
+    position: absolute;
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
   .delivery-card {
     position: relative;
     top: auto;
     left: auto;
     transform: none;
     margin: 80px auto 60px;
-    width: 95%;
+    width: 85%;
     padding: 20px;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .content-overlay {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
   }
 
   .copyright {

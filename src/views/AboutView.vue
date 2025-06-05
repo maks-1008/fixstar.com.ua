@@ -186,14 +186,27 @@ p {
     background-image: url('/images/bg-image5.jpg');
   }
 
+  .about-view {
+    position: absolute;
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
   .about-card {
     position: relative;
     top: auto;
     left: auto;
     transform: none;
     margin: 80px auto 60px;
-    width: 95%;
+    width: 85%;
     padding: 20px;
+  }
+
+  .content-overlay {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
   }
 
   .copyright {
